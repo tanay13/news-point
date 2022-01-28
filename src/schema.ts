@@ -9,4 +9,8 @@ export const schema = makeSchema({
     schema: join(__dirname, "..", "schema.graphql"),
     typegen: join(__dirname, "..", "nexus-typegen.ts"),
   },
+  contextType: {
+    module: join(__dirname, "./context.ts"), // path to the file where context interface is present
+    export: "Context", //exported interface name
+  },
 });

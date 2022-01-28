@@ -12,31 +12,19 @@ export const Link = objectType({
   },
 });
 
-//hardcoding the links value of array of NexusGenObjects["Link"] type
-let links: NexusGenObjects["Link"][] = [
-  {
-    id: 1,
-    url: "www.github.com",
-    description: "View all amazing repos",
-  },
-  {
-    id: 2,
-    url: "www.instagram.com",
-    description: "Connect with different people",
-  },
-];
-
 export const LinkQuery = extendType({
   type: "Query",
   definition(t) {
     t.nonNull.list.nonNull.field("feed", {
       type: "Link",
       resolve(parent, args, context, info) {
-        return links;
+        return context.prisma.link.findMany();
       },
     });
   },
 });
+
+//prisma queries return Promise Objects but Apollo Server detects and automatically resolve any Promise object that is returned from resolver functions
 
 export const LinkMutation = extendType({
   type: "Mutation",
@@ -50,15 +38,13 @@ export const LinkMutation = extendType({
 
       resolve(parent, args, context) {
         const { description, url } = args;
-
-        let idCount = links.length + 1;
-        const link = {
-          id: idCount,
-          description: args.description,
-          url: args.url,
-        };
-        links.push(link);
-        return link;
+        const newLink = context.prisma.link.create({
+          data: {
+            description,
+            url,
+          },
+        });
+        return newLink;
       },
     });
     t.nonNull.field("updatePost", {
