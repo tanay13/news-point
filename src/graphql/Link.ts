@@ -45,10 +45,15 @@ export const LinkMutation = extendType({
 
       resolve(parent, args, context) {
         const { description, url } = args;
+        const userId = context.userId;
+        if (!userId) {
+          throw new Error("You need to login first");
+        }
         const newLink = context.prisma.link.create({
           data: {
             description,
             url,
+            postedBy: { connect: { id: userId } }, // 2
           },
         });
         return newLink;
