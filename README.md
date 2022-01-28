@@ -14,3 +14,7 @@ Prisma Client exposes a CRUD API for the models in your schema for you to read a
 #### Important Links
 
 https://stackoverflow.com/questions/65034164/can-graphql-schema-be-used-as-database-schema-definition
+
+Fluent API - https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#fluent-api
+
+NexusSDL converter - https://nexusjs.org/converter
