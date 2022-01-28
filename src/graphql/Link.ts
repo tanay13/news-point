@@ -1,5 +1,4 @@
 import { extendType, intArg, nonNull, objectType, stringArg } from "nexus";
-import { NexusGenObjects } from "../../nexus-typegen";
 
 // objectType is used to create new type in our GraphQL schema
 export const Link = objectType({
@@ -47,21 +46,17 @@ export const LinkMutation = extendType({
         return newLink;
       },
     });
-    t.nonNull.field("updatePost", {
-      type: "Link",
-      args: {
-        id: nonNull(intArg()),
-        description: nonNull(stringArg()),
-        url: nonNull(stringArg()),
-      },
+    // t.nonNull.field("updatePost", {
+    //   type: "Link",
+    //   args: {
+    //     id: nonNull(intArg()),
+    //     description: nonNull(stringArg()),
+    //     url: nonNull(stringArg()),
+    //   },
 
-      resolve(parent, args, context) {
-        const { id, description, url } = args;
+    //   resolve(parent, args, context) {
 
-        links[id - 1].description = description;
-        links[id - 1].url = url;
-        return links[id - 1];
-      },
-    });
+    //   },
+    // });
   },
 });
