@@ -35,6 +35,8 @@ export const LinkQuery = extendType({
       type: "Link",
       args: {
         filter: stringArg(),
+        skip: intArg(), // start index  - by default 0
+        take: intArg(),
       },
       resolve(parent, args, context, info) {
         const where = args.filter
@@ -46,7 +48,11 @@ export const LinkQuery = extendType({
             }
           : {};
 
-        return context.prisma.link.findMany({ where });
+        return context.prisma.link.findMany({
+          where,
+          skip: args?.skip as number | undefined, //In Prisma, null is a specific value and undefined means do nothing or ignore
+          take: args?.take as number | undefined,
+        });
       },
     });
   },
