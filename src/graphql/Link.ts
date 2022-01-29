@@ -16,6 +16,14 @@ export const Link = objectType({
           .postedBy(); //Fluent API
       },
     });
+    t.nonNull.list.nonNull.field("voters", {
+      type: "User",
+      resolve(parent, args, context) {
+        return context.prisma.link
+          .findUnique({ where: { id: parent.id } })
+          .voters();
+      },
+    });
   },
 });
 
@@ -59,17 +67,5 @@ export const LinkMutation = extendType({
         return newLink;
       },
     });
-    // t.nonNull.field("updatePost", {
-    //   type: "Link",
-    //   args: {
-    //     id: nonNull(intArg()),
-    //     description: nonNull(stringArg()),
-    //     url: nonNull(stringArg()),
-    //   },
-
-    //   resolve(parent, args, context) {
-
-    //   },
-    // });
   },
 });
